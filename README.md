@@ -6,6 +6,15 @@
 go run hello-world.go
 ```
 
+### Docker
+
+You can also run the example app using Docker:
+
+```
+docker build -t golang-ci .
+docker run --name=golang-ci -i -t golang-ci
+```
+
 ## Testing
 
 ```
