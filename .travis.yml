@@ -9,6 +9,9 @@ go:
 matrix:
   fast_finish: true
 
+notifications:
+  email: false
+
 before_install:
   - go get github.com/golang/lint/golint
 
