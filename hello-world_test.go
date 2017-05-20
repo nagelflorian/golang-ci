@@ -7,7 +7,7 @@ func TestGreeting(t *testing.T) {
 		in, expect string
 	}{
 		{"Felix", "Hi, Felix"},
-		{"Regina", "Hi Regina"},
+		{"Regina", "Hi, Regina"},
 	}
 
 	for _, c := range cases {
