@@ -1,4 +1,17 @@
+# Travis CI (http://travis-ci.org/) is a continuous integration
+# service for open source projects.
+
 language: go
 
 go:
   - 1.8
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - go get github.com/golang/lint/golint
+
+script:
+  - golint
+  - go test
