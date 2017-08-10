@@ -37,7 +37,7 @@ jobs:
 
       - run:
           name: Unit test
-          command: go test
+          command: go test -v 2>&1 | go-junit-report > ${TEST_RESULTS}/unit-test-report.xml
 
       - store_artifacts:
           path: /tmp/test-results
