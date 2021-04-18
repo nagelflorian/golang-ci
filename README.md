@@ -1,4 +1,4 @@
-# GoLang-CI [![Travis-CI build status](https://img.shields.io/travis/nagelflorian/golang-ci.svg)](https://travis-ci.org/nagelflorian/golang-ci) [![CircleCI](https://circleci.com/gh/nagelflorian/golang-ci/tree/master.svg?style=svg)](https://circleci.com/gh/nagelflorian/golang-ci/tree/master)
+# GoLang-CI [![CircleCI](https://circleci.com/gh/nagelflorian/golang-ci/tree/master.svg?style=svg)](https://circleci.com/gh/nagelflorian/golang-ci/tree/master)
 
 ## Run
 
