@@ -1,9 +1,9 @@
-FROM golang:1.8.1
+FROM golang:1.16 as build
+WORKDIR /
+ADD ./ ./
+RUN go test -v
+RUN go build
 
-ADD . /go/src/github.com/nagelflorian/golang-ci
-
-RUN go install github.com/nagelflorian/golang-ci
-
-CMD ["/go/bin/golang-ci"]
-
-EXPOSE 3000
+FROM scratch
+COPY --from=build ./golang-ci /golang-ci
+ENTRYPOINT ["/golang-ci"]
