@@ -25,10 +25,6 @@ go test
 
 You can see the build status here: https://circleci.com/gh/nagelflorian/golang-ci
 
-## Travis-CI
-
-You can see the build status here: https://travis-ci.org/nagelflorian/golang-ci
-
 ## Docker Hub
 
 New Docker builds for Docker Hub are automatically triggered by Travis-CI:

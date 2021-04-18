@@ -1,46 +1,31 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/golang:1.8.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: /go/src/github.com/nagelflorian/golang-ci
-
-    environment:
-      TEST_RESULTS: /tmp/test-results
-
-    parallelism: 4
-
+    executor:
+      name: go/default
+      tag: "1.15"
     steps:
       - checkout
-
-      - run: mkdir -p $TEST_RESULTS
-
-      # Normally, this step would be in a custom primary image;
-      # we've added it here for the sake of explanation.
-      - run: go get github.com/jstemmer/go-junit-report
-      - run: go get github.com/golang/lint/golint
-
+      # - go/load-cache
+      - go/mod-download
+      # - go/save-cache
+      - go/test:
+          covermode: atomic
+          failfast: true
+          race: true
+  build_image:
+    docker:
+    - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
       - run:
-          name: Lint
-          command: golint
-
-      - run:
-          name: Unit test
-          command: go test -v 2>&1 | go-junit-report > ${TEST_RESULTS}/unit-test-report.xml
-
-      - store_artifacts:
-          path: /tmp/test-results
-
-      - store_test_results:
-          path: /tmp/test-results
+          name: Build Docker image
+          command: docker build -t golang-ci .
+orbs:
+  go: circleci/go@1.6.0
+version: 2.1
+workflows:
+  main:
+    jobs:
+      - build
+      - build_image
