@@ -1,5 +1,19 @@
 jobs:
-  build:
+  build_image:
+    docker:
+      - image: jdrouet/docker-with-buildx:stable
+    environment:
+      BUILDX_PLATFORMS: linux/amd64,linux/arm64
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+      - run: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+      - run: |
+          docker buildx build --push \
+            --platform $BUILDX_PLATFORMS \
+            --tag floriannagel/golang-ci:$CIRCLE_SHA1 .
+  tests:
     executor:
       name: go/default
       tag: "1.15"
@@ -12,20 +26,11 @@ jobs:
           covermode: atomic
           failfast: true
           race: true
-  build_image:
-    docker:
-    - image: docker:20.10.5
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build Docker image
-          command: docker build -t golang-ci .
 orbs:
   go: circleci/go@1.6.0
 version: 2.1
 workflows:
   main:
     jobs:
-      - build
       - build_image
+      - tests
